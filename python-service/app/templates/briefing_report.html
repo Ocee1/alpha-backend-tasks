@@ -1,0 +1,49 @@
+<div class="company-info">
+  <h2>Company: {{ briefing.company_info.name }} ({{ briefing.company_info.ticker }})</h2>
+  {% if briefing.sector %}
+  <p>Sector: {{ briefing.company_info.sector }}</p>
+  {% endif %}
+  <p>Analyst: {{ briefing.company_info.analyst_name }}</p>
+  <hr class="divider">
+</div>
+
+<section class="summary">
+  <h3>Executive Summary</h3>
+  <p>{{ briefing.summary }}</p>
+</section>
+
+<section class="key-points">
+  <h3>Key Points</h3>
+  <ul>
+    {% for point in briefing.key_points %}
+      <li>{{ point }}</li>
+    {% endfor %}
+  </ul>
+</section>
+
+{% if briefing.risks %}
+  <section class="risks">
+    <h3>Risks</h3>
+    <ul>
+      {% for point in briefing.risks %}
+        <li>{{ point }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}
+
+<section class="recommendation">
+  <h3>Recommendation</h3>
+  <p>{{ briefing.recommendation }}</p>
+</section>
+
+{% if briefing.metrics %}
+<section class="metrics">
+  <h3>Metrics</h3>
+  <ul>
+    {% for metric in briefing.metrics %}
+      <li>{{ metric.name }}: {{ metric.value }}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}

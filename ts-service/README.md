@@ -79,5 +79,41 @@ Include these headers in requests:
 - `src/entities/`: starter entities
 - `src/sample/`: tiny example module (controller/service/dto)
 - `src/queue/`: in-memory queue abstraction
-- `src/llm/`: provider interface + fake provider
+- `src/llm/`: provider interface + fake provider + gemini summarizer
 - `src/migrations/`: TypeORM migration files
+
+## LLM Provider Interface
+
+The Gemini integration (GeminiSummarizationProvider) implements a generic SummarizationProvider interface. This allows the application to easily swap to OpenAI or Anthropic in the future, or inject a FakeSummarizationProvider during automated testing to avoid API rate limits and costs.
+
+## API Endpoints
+### Candidates
+
+POST /sample/candidates
+Creates a new candidate assigned to the authenticated user's workspace.
+
+GET /sample/candidates
+Lists all candidates within the user's workspace.
+
+### Documents
+
+POST /sample/candidates/:candidateId/documents
+Uploads a candidate document (resume, cover letter). Assumes text is extracted and generates a local file system storage key.
+
+JSON
+{
+  "documentType": "resume",
+  "fileName": "Jane_Doe_Resume.pdf",
+  "rawText": "Extracted text content..."
+}
+
+### Summaries
+
+POST /sample/candidates/:candidateId/summaries/generate
+Triggers the async worker to read the candidate's documents and generate an AI summary. Returns a pending summary object.
+
+GET /sample/candidates/:candidateId/summaries
+Lists all summaries for a specific candidate.
+
+GET /sample/candidates/:candidateId/summaries/:summaryId
+Fetches a specific summary. Can be used to poll for completion or status change.

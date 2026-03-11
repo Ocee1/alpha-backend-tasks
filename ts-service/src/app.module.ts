@@ -8,6 +8,7 @@ import { HealthModule } from './health/health.module';
 import { LlmModule } from './llm/llm.module';
 import { QueueModule } from './queue/queue.module';
 import { SampleModule } from './sample/sample.module';
+import { WorkerModule } from './worker/worker.module';
 
 @Module({
   imports: [
@@ -22,6 +23,8 @@ import { SampleModule } from './sample/sample.module';
     QueueModule,
     LlmModule,
     SampleModule,
+    WorkerModule,
   ],
+  providers: [],
 })
 export class AppModule {}

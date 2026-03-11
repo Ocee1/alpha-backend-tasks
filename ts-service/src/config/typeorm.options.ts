@@ -4,6 +4,8 @@ import { DataSourceOptions } from 'typeorm';
 import { SampleCandidate } from '../entities/sample-candidate.entity';
 import { SampleWorkspace } from '../entities/sample-workspace.entity';
 import { InitialStarterEntities1710000000000 } from '../migrations/1710000000000-InitialStarterEntities';
+import { CandidateDocument } from '../entities/candidateDocument.entity';
+import { CandidateSummary } from '../entities/candidateSummary.entity';
 
 export const defaultDatabaseUrl =
   'postgres://assessment_user:assessment_pass@localhost:5432/assessment_db';
@@ -13,8 +15,8 @@ export const getTypeOrmOptions = (
 ): TypeOrmModuleOptions & DataSourceOptions => ({
   type: 'postgres',
   url: databaseUrl,
-  entities: [SampleWorkspace, SampleCandidate],
-  migrations: [InitialStarterEntities1710000000000],
+  entities: [SampleWorkspace, SampleCandidate, CandidateDocument, CandidateSummary],
+  migrations: [__dirname + '/../migrations/*.ts'],
   migrationsTableName: 'typeorm_migrations',
   synchronize: false,
   logging: false,
